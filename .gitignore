@@ -236,3 +236,7 @@ $RECYCLE.BIN/
 *.iml
 /dist
 dist
+
+*/application.properties
+*/resources/application.properties
+application.properties

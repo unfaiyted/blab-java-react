@@ -1,4 +1,4 @@
-package com.faiyted.blab.repositories;
+package com.faiyted.blab.repositories.user;
 
 
 

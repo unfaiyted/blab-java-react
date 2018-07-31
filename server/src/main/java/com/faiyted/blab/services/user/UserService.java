@@ -4,9 +4,9 @@ package com.faiyted.blab.services.user;
 import com.faiyted.blab.models.user.ExtendedSocialUser;
 import com.faiyted.blab.models.user.User;
 import com.faiyted.blab.models.user.UserProfile;
-import com.faiyted.blab.repositories.Roles;
-import com.faiyted.blab.repositories.UserConnections;
-import com.faiyted.blab.repositories.Users;
+import com.faiyted.blab.repositories.user.Roles;
+import com.faiyted.blab.repositories.user.UserConnections;
+import com.faiyted.blab.repositories.user.Users;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -21,8 +21,6 @@ public class UserService {
     private Users users;
     private UserConnections connections;
     private Roles roles;
-
-
 
 
     @Autowired

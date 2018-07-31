@@ -1,8 +1,6 @@
 package com.faiyted.blab.services.user;
 
 
-
-
 import com.faiyted.blab.models.user.UserProfile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

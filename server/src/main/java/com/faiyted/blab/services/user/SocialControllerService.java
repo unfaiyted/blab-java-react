@@ -28,11 +28,6 @@ public class SocialControllerService {
     private static final String USER_CONNECTION = "user_connection";
     private static final String USER_PROFILE = "user_profile";
 
-    @Value("${file-upload-path}")
-    private String uploadPath;
-
-
-
 
     @Autowired
     private UserService usersDao;

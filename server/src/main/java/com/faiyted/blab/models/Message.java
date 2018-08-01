@@ -1,21 +1,33 @@
 package com.faiyted.blab.models;
 
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import com.faiyted.blab.models.user.User;
+
+import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 public class Message {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column
-    String message;
+    private String message;
 
+    @Column
+    private LocalDateTime sentAt = LocalDateTime.now();
+
+    @ManyToOne
+    private User sentBy;
+
+    public Message() {}
+
+    public Message(String message, User sentBy) {
+        this.message = message;
+        this.sentBy = sentBy;
+    }
 
     public Long getId() {
         return id;
@@ -31,5 +43,13 @@ public class Message {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public User getSentBy() {
+        return sentBy;
+    }
+
+    public void setSentBy(User sentBy) {
+        this.sentBy = sentBy;
     }
 }

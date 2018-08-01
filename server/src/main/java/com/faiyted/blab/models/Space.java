@@ -1,20 +1,27 @@
 package com.faiyted.blab.models;
 
+import com.faiyted.blab.models.user.User;
+
 import javax.persistence.*;
 
 @Entity
 public class Space {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column
     private String name;
 
-    // Owner user
+    @ManyToOne
+    private User owner;
 
-    public Space() {
+    public Space() {}
+
+    public Space(String name, User owner) {
+        this.name = name;
+        this.owner = owner;
     }
 
     public Long getId() {
@@ -31,5 +38,13 @@ public class Space {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public User getOwner() {
+        return owner;
+    }
+
+    public void setOwner(User owner) {
+        this.owner = owner;
     }
 }

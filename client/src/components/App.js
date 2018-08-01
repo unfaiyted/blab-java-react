@@ -1,19 +1,32 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import LoadingBar from 'react-redux-loading'
+import {BrowserRouter as Router} from "react-router-dom";
+import {handleInitialData} from "../actions/shared";
 
 class App extends Component {
+    componentDidMount() {
+        const { dispatch } = this.props;
+        dispatch(handleInitialData());
+    }
   render() {
+      const {loading} = this.props;
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
+
+        <Router>
+            <div className={'container'}>
+               Nav {loading === true ? <LoadingBar/> : "hi"}
+            </div>
+        </Router>
     );
   }
 }
 
-export default App;
+
+function mapStateToProps({ authedUser }) {
+    return {
+        loading: authedUser === null
+    }
+}
+
+export default connect(mapStateToProps)(App);

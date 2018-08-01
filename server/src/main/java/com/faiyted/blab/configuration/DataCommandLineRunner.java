@@ -1,6 +1,5 @@
 package com.faiyted.blab.configuration;
 
-
 import com.faiyted.blab.models.Channel;
 import com.faiyted.blab.models.SiteSetting;
 import com.faiyted.blab.models.Space;
@@ -20,7 +19,6 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Random;
 import java.util.stream.Stream;
-
 
 @Component
 public class DataCommandLineRunner implements CommandLineRunner {

@@ -2,4 +2,113 @@ body {
   margin: 0;
   padding: 0;
   font-family: sans-serif;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    color: #ebe9e9;
+}
+
+ul {
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+
+}
+
+.container {
+    width: 100vw;
+    height: 100vh;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+    background-color: #2D2D2D;
+
+}
+
+a:link {
+    color: #bbb9b9;
+}
+
+/* visited link */
+a:visited {
+    color: #bbb9b9;
+}
+
+/* mouse over link */
+a:hover {
+    color: #d6d4d4;
+
+}
+
+/* selected link */
+a:active {
+    color: #ebe9e9;
+}
+
+
+
+.spaces-list {
+    width:80px;
+    background: #1f1f1f;
+    height: 100vh;
+    padding-left: 0;
+    margin: 0;
+    overflow-y: scroll;
+    float: left;
+
+}
+
+.spaces-list::-webkit-scrollbar {
+    width: 0px;  /* remove scrollbar space */
+    background: transparent;  /* optional: just make scrollbar invisible */
+}
+/* optional: show position indicator in red */
+.spaces-list::-webkit-scrollbar-thumb {
+    background: #FF0000;
+}
+
+.spaces-list ul {
+    list-style-type: none;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+
+
+}
+
+.spaces-list li {
+    list-style-type: none;
+    padding-bottom: 15px;
+    padding-left: 10px;
+}
+
+.spaces-list .icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: #ab1f00;
+}
+
+.spaces-list .icon span {
+    line-height: 2;
+    font-size: 30px;
+    padding-left: 20px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.channel-container {
+    width: 200px;
+    height: 100vh;
+    padding-left: 0;
+    margin: 0;
+    padding-top: 0;
+    background: #1f0c00;
+    float: left;
+}
+
+.messages-container {
+    width: calc(100vw - 280px);
+    background: #636363;
+    height: 100vh;
+    float: left;
 }

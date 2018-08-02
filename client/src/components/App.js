@@ -4,6 +4,7 @@ import LoadingBar from 'react-redux-loading'
 import {BrowserRouter as Router} from "react-router-dom";
 import {handleInitialData} from "../actions/shared";
 import Spaces from "./Spaces";
+import AppRouter from "./AppRouter";
 
 class App extends Component {
     componentDidMount() {
@@ -16,8 +17,7 @@ class App extends Component {
 
         <Router>
             <div className={'container'}>
-               Nav {loading === true ? <LoadingBar/> : <Spaces/> }
-
+               {loading === true ? <LoadingBar/> : <AppRouter/> }
             </div>
         </Router>
     );

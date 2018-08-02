@@ -1,4 +1,5 @@
 import {saveChannel} from "../utils/api";
+import {connect} from 'react'
 
 export const ADD_CHANNEL = 'ADD_CHANNEL';
 export const REMOVE_CHANNEL = 'REMOVE_CHANNEL';

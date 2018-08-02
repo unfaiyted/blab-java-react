@@ -26,6 +26,7 @@ ul {
 
 a:link {
     color: #bbb9b9;
+    text-decoration: none;
 }
 
 /* visited link */
@@ -102,8 +103,18 @@ a:active {
     padding-left: 0;
     margin: 0;
     padding-top: 0;
-    background: #1f0c00;
+    background: #393939;
     float: left;
+
+}
+
+.channel-container .active {
+    font-weight: bold;
+}
+
+.channel-container li {
+    padding-bottom: 10px;
+    padding-left: 5px;
 }
 
 .messages-container {
@@ -111,4 +122,13 @@ a:active {
     background: #636363;
     height: 100vh;
     float: left;
+}
+
+
+.space-header {
+    padding: 10px;
+    background: #363636;
+    border-bottom: 1px solid #000;
+    margin-bottom: 5px;
+
 }

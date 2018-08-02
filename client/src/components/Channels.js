@@ -1,10 +1,11 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import Spaces from "./Spaces";
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
+import SpaceHeader from "./SpaceHeader";
 
 
-
+//TODO: add something to check which channel is currently selected
 class Channels extends React.Component {
 
     render() {
@@ -13,11 +14,12 @@ class Channels extends React.Component {
             <div>
             <Spaces/>
             <div className={'channel-container'}>
+                    <SpaceHeader name={this.props.spaceName}/>
                     <ul>
                         { channels.map((channel) => {
                             return (
                             <li key={channel.id}>#
-                                <Link to={'/channel/' + channel.id}> {channel.name}</Link>
+                                <NavLink activeStyle={'active'} to={'/channel/' + channel.id}> {channel.name}</NavLink>
                                 </li>
                             )
                         }) }
@@ -33,21 +35,23 @@ class Channels extends React.Component {
 function mapStateToProps({ channels }, props) {
     //channel id
 
-    console.log("props", props);
-
     const passedId = (props.space === undefined) ? props.match.params.id : props.space;
 
     const spacesChannels =Object.keys(channels).map((key) => {
            const { id, name, space } =  channels[key];
         return {
             id,
-            name,
-            spaceId: space.id
+            name: name.toLowerCase().replace(" ","-"),
+            spaceId: space.id,
+            spaceName: space.name
         }
     }).filter((chan) => chan.spaceId === parseInt(passedId));
 
+    const spaceName = spacesChannels[0].spaceName;
+
     return {
-        spacesChannels
+        spacesChannels,
+        spaceName
     }
 }
 

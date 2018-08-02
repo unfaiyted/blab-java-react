@@ -110,6 +110,13 @@ a:active {
 
 .channel-container .active {
     font-weight: bold;
+    background: #2D2D2D;
+    margin: 10px;
+    padding: 5px;
+    padding: 5px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
 }
 
 .channel-container li {
@@ -124,11 +131,46 @@ a:active {
     float: left;
 }
 
+.messages-container .child-container {
 
-.space-header {
+    padding: 0;
+    width: calc(100vw - 280px);
+    height: calc(100vh - 120px);
+}
+
+.respond-container {
+    position: fixed;
+    bottom: 0;
+    width: calc(100% - 60px);
+    border-top: 1px solid #63391c;
+
+}
+
+.respond-container input {
+    width: calc(100% - 280px);
+    padding: 10px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    font-size: 20px;
+    margin-left: 15px;
+    border-radius: 5px;
+    background: #818181;
+    border-color: transparent;
+
+}
+
+input::placeholder {
+    color: #bbb9b9;
+}
+
+
+.space-header, .channel-header {
     padding: 10px;
     background: #363636;
     border-bottom: 1px solid #000;
     margin-bottom: 5px;
+}
 
+.channel-header {
+    background: #858585;
 }

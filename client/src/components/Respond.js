@@ -6,13 +6,15 @@ class Respond extends React.Component {
 
     render() {
         return (
-            <div>
+            <div className={'respond-container'}>
                 <input  type={'text'}
                         placeholder={'Message #channel'}
-
                 />
             </div>
         )
     }
 
 }
+
+
+export default Respond;

@@ -1,12 +1,18 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import Spaces from "./Spaces";
-import { NavLink } from 'react-router-dom';
+import { NavLink} from 'react-router-dom';
 import SpaceHeader from "./SpaceHeader";
+import {handleMessageData} from "../actions/messages";
 
 
 //TODO: add something to check which channel is currently selected
 class Channels extends React.Component {
+
+    // handleChannelChange = (e) => {
+    //     const {dispatch} = this.props;
+    //     dispatch(handleMessageData(e.id));
+    // };
 
     render() {
         const channels = this.props.spacesChannels;
@@ -18,8 +24,12 @@ class Channels extends React.Component {
                     <ul>
                         { channels.map((channel) => {
                             return (
-                            <li key={channel.id}>#
-                                <NavLink activeStyle={'active'} to={'/channel/' + channel.id}> {channel.name}</NavLink>
+                            <li key={channel.id}
+                            id={channel.id}>#
+                                <NavLink
+                                    activeClassName={'active'}
+                                    to={'/channel/' + channel.id}
+                                > {channel.name}</NavLink>
                                 </li>
                             )
                         }) }
@@ -56,7 +66,7 @@ function mapStateToProps({ channels }, props) {
 }
 
 
-export default connect(mapStateToProps)(Channels);
+export default connect(mapStateToProps, null, null, {pure: false})(Channels);
 
 
 

@@ -124,7 +124,7 @@ a:active {
     padding-left: 5px;
 }
 
-.messages-container {
+.convo-container {
     width: calc(100vw - 280px);
     background: #636363;
     height: 100vh;
@@ -133,9 +133,6 @@ a:active {
 
 .messages-container .child-container {
 
-    padding: 0;
-    width: calc(100vw - 280px);
-    height: calc(100vh - 120px);
 }
 
 .respond-container {
@@ -174,3 +171,51 @@ input::placeholder {
 .channel-header {
     background: #858585;
 }
+
+/*Multiple full*/
+.messages-container {
+    padding: 0;
+    width: calc(100vw - 290px);
+    height: calc(100vh - 122px);
+    overflow-y: scroll;
+    padding-left: 10px;
+    display: flex;
+    flex-flow: column;
+}
+
+.message-container {
+    float: left;
+}
+
+.messages-container .avatar {
+ width:  60px;
+    height: 60px;
+    border: 1px solid #fff;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+    background: #bbb9b9;
+    float: left;
+    margin-right: 10px;
+}
+
+.messages-container .message {
+    margin: 10px;
+
+}
+
+.messages-container .message .username {
+    font-weight: bold;
+    color: #ffffff;
+    float: left;
+}
+
+.messages-container .message .time {
+padding-left: 5px;
+}
+
+.messages-container .message .content {
+   padding-top: 10px;
+    padding-bottom: 20px;
+}
+

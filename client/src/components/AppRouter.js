@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import Spaces from './Spaces';
 import Channels from './Channels';
-import Messages from "./Messages";
+import Conversation from "./Conversation";
 
 
 class AppRouter extends React.Component {
@@ -12,9 +12,8 @@ class AppRouter extends React.Component {
         return (
             <Switch>
                 <Route exact path={'/'} component={Spaces} />
-                <Route path={'/spaces/:id'} component={Channels} />
-                <Route path={'/channel/:id'} component={Messages} />
-
+                <Route path={'/spaces/:id'} component={Channels}  />
+                <Route path={'/channel/:id'} component={Conversation}/>
             </Switch>
 
         )

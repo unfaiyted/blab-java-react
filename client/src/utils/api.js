@@ -20,7 +20,8 @@ async function getChannels(userId) {
 }
 
 
-async function getChannelsByOwnerId(ownerId) {
+
+ async function getChannelsByOwnerId(ownerId) {
     const response = await fetch(BASE_URL + 'channels/list/' + ownerId);
     return response.json();
 }
@@ -40,12 +41,23 @@ async function getSpacesByUser(userId) {
     return response.json();
 }
 
+
+export async function getMessages(channelId) {
+    const response = await fetch(BASE_URL + 'messages/channel/' + channelId);
+    return response.json();
+}
+
 export async function saveSpace(space) {
     const response  = await fetch(BASE_URL + 'spaces/add');
     return response.json();
 }
 
 export async function saveChannel(channel) {
+    const response = await fetch(BASE_URL + 'channels/add');
+    return response.json();
+}
+
+export async function saveMessage(message) {
     const response = await fetch(BASE_URL + 'channels/add');
     return response.json();
 }

@@ -1,52 +1,47 @@
-import React from 'react'
-import { connect } from 'react-redux'
-import Spaces from "./Spaces";
-import Channels from "./Channels";
-import ChannelHeader from "./ChannelHeader";
-import Respond from "./Respond";
 import Message from "./Message";
+import React from "react";
+import connect from "react-redux/es/connect/connect";
+
+
+
 
 
 class Messages extends React.Component {
 
     render() {
-        const { spaceId, name } = this.props.channel[0];
-        console.log(spaceId);
-        return(
-            <div>
-                <Channels space={spaceId}/>
-            <div className={'messages-container'}>
-                <ChannelHeader name={name}/>
-                <div className={'child-container'}>
-                    <Message/>
-                </div>
+        const { conversation, changes } = this.props;
+       return(
+           <div className={'messages-container'}>
+               {
+                   conversation.map((message) => {
 
-                <Respond/>
-            </div>
-            </div>
-        )
+                       return <Message message={message} />
+                   })
+               }
+           </div>)
+
+
+
     }
 
 }
 
 
-function mapStateToProps({ channels }, props) {
-    //channel id
-    const passedId = props.match.params.id;
 
-    const channel = Object.keys(channels).map((key) => {
-        const { id, name, space } =  channels[key];
+function mapStateToProps({ messages }) {
+
+
+    const conversation = Object.keys(messages).map((key) => {
+        const { id, message, sentBy } =  messages[key];
         return {
             id,
-            name,
-            spaceId: space.id,
+            message,
+            sentBy,
         }
-    }).filter((chan) => chan.id === parseInt(passedId));
-
-    console.log("channel", channel);
+    });
 
     return {
-        channel,
+        conversation
     }
 
 }

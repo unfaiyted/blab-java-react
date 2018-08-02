@@ -1,15 +1,9 @@
 package com.faiyted.blab.configuration;
 
-import com.faiyted.blab.models.Channel;
-import com.faiyted.blab.models.SiteSetting;
-import com.faiyted.blab.models.Space;
-import com.faiyted.blab.models.SpaceMember;
+import com.faiyted.blab.models.*;
 import com.faiyted.blab.models.user.User;
 import com.faiyted.blab.models.user.UserProfile;
-import com.faiyted.blab.repositories.Channels;
-import com.faiyted.blab.repositories.SiteSettings;
-import com.faiyted.blab.repositories.SpaceMembers;
-import com.faiyted.blab.repositories.Spaces;
+import com.faiyted.blab.repositories.*;
 import com.faiyted.blab.services.user.UserService;
 import com.github.javafaker.Faker;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +21,7 @@ import java.util.stream.Stream;
 public class DataCommandLineRunner implements CommandLineRunner {
 
     private Channels channels;
+    private ChannelMessages channelMessages;
     private Spaces spaces;
     private SpaceMembers members;
     private PasswordEncoder passwordEncoder;
@@ -46,6 +41,7 @@ public class DataCommandLineRunner implements CommandLineRunner {
     @Autowired
     public DataCommandLineRunner(
             Channels channels,
+            ChannelMessages channelMessages,
             SpaceMembers members,
             Spaces spaces,
             PasswordEncoder passwordEncoder,
@@ -55,6 +51,7 @@ public class DataCommandLineRunner implements CommandLineRunner {
     {
 
         this.channels = channels;
+        this.channelMessages =channelMessages;
         this.spaces = spaces;
         this.site = site;
         this.members = members;
@@ -84,7 +81,7 @@ public class DataCommandLineRunner implements CommandLineRunner {
                 }
 
                 createSpaceMembers(create.get("memberSpaces"));
-
+                createChannelMessages(create.get("channelMessages"));
 
 
 
@@ -132,6 +129,13 @@ public class DataCommandLineRunner implements CommandLineRunner {
                 new Channel(faker.superhero().power(), space));
     }
 
+    private ChannelMessage createChannelMessage(Channel channel, User user) {
+        return channelMessages.save(new ChannelMessage(
+                faker.gameOfThrones().quote(),
+                user,
+                channel));
+    }
+
     private void createSpacesAndChannels(User user) {
 
         for(int i = 0; i < create.get("spaces"); i++) {
@@ -152,6 +156,20 @@ public class DataCommandLineRunner implements CommandLineRunner {
                 createMember(space, user);
             }
         }
+    }
+
+
+    private void createChannelMessages(Integer messagesPerChannel) {
+        List<User> users = userDao.getUsers().findAll();
+        List<Channel> channelList = channels.findAll();
+
+        for(Channel channel  : channelList) {
+            for(int i = 0; i < messagesPerChannel; i++) {
+                User user = users.get(rand.nextInt(users.size()));
+                createChannelMessage(channel,user);
+            }
+        }
+
     }
 
     private void siteSettings() {
@@ -175,6 +193,8 @@ public class DataCommandLineRunner implements CommandLineRunner {
         create.put("channels", 5);
         // How many spaces each user is a member of
         create.put("memberSpaces", 5);
+        // How many messages to make in each channel
+        create.put("channelMessages", 50);
     }
 
 

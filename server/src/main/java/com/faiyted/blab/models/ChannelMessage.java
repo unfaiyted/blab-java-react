@@ -9,22 +9,20 @@ import javax.persistence.ManyToOne;
 public class ChannelMessage extends Message {
 
     @ManyToOne
-    private Channel sentIn;
+    private Channel channel;
 
-    public ChannelMessage(Channel sentIn) {
-        this.sentIn = sentIn;
-    }
+    public ChannelMessage() {}
 
-    public ChannelMessage(String message, User sentBy, Channel sentIn) {
+    public ChannelMessage(String message, User sentBy, Channel channel) {
         super(message, sentBy);
-        this.sentIn = sentIn;
+        this.channel = channel;
     }
 
-    public Channel getSentIn() {
-        return sentIn;
+    public Channel getChannel() {
+        return channel;
     }
 
-    public void setSentIn(Channel sentIn) {
-        this.sentIn = sentIn;
+    public void setChannel(Channel sentIn) {
+        this.channel = sentIn;
     }
 }

@@ -14,8 +14,14 @@ async function getUsers() {
     return response.json();
 }
 
-async function getChannels() {
-    const response = await fetch(BASE_URL + 'channels/list');
+async function getChannels(userId) {
+    const response = await fetch(BASE_URL + 'channels/user/' + userId);
+    return response.json();
+}
+
+
+async function getChannelsByOwnerId(ownerId) {
+    const response = await fetch(BASE_URL + 'channels/list/' + ownerId);
     return response.json();
 }
 
@@ -24,10 +30,9 @@ async function getChannelsBySpace(spaceId) {
     return response.json();
 }
 
-async function getSpaces() {
-    const response = await fetch(BASE_URL + 'spaces/list');
+async function getSpaces(userId) {
+    const response = await fetch(BASE_URL + 'spaces/member/' + userId);
     return response.json();
-
 }
 
 async function getSpacesByUser(userId) {
@@ -45,11 +50,11 @@ export async function saveChannel(channel) {
     return response.json();
 }
 
-export function getInitialData () {
+export function getInitialData (userId) {
     return Promise.all([
         getUsers(),
-        getSpaces(),
-        getChannels(),
+        getSpaces(userId),
+        getChannels(userId),
     ]).then(([
         users,
         spaces,

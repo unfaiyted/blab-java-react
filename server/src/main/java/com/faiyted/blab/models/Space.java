@@ -3,6 +3,7 @@ package com.faiyted.blab.models;
 import com.faiyted.blab.models.user.User;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Space {

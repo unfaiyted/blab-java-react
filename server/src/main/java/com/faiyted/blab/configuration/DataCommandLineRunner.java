@@ -3,10 +3,12 @@ package com.faiyted.blab.configuration;
 import com.faiyted.blab.models.Channel;
 import com.faiyted.blab.models.SiteSetting;
 import com.faiyted.blab.models.Space;
+import com.faiyted.blab.models.SpaceMember;
 import com.faiyted.blab.models.user.User;
 import com.faiyted.blab.models.user.UserProfile;
 import com.faiyted.blab.repositories.Channels;
 import com.faiyted.blab.repositories.SiteSettings;
+import com.faiyted.blab.repositories.SpaceMembers;
 import com.faiyted.blab.repositories.Spaces;
 import com.faiyted.blab.services.user.UserService;
 import com.github.javafaker.Faker;
@@ -17,6 +19,7 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Random;
 import java.util.stream.Stream;
 
@@ -25,6 +28,7 @@ public class DataCommandLineRunner implements CommandLineRunner {
 
     private Channels channels;
     private Spaces spaces;
+    private SpaceMembers members;
     private PasswordEncoder passwordEncoder;
     private SiteSettings site;
     private UserService userDao;
@@ -42,6 +46,7 @@ public class DataCommandLineRunner implements CommandLineRunner {
     @Autowired
     public DataCommandLineRunner(
             Channels channels,
+            SpaceMembers members,
             Spaces spaces,
             PasswordEncoder passwordEncoder,
             SiteSettings site,
@@ -52,6 +57,7 @@ public class DataCommandLineRunner implements CommandLineRunner {
         this.channels = channels;
         this.spaces = spaces;
         this.site = site;
+        this.members = members;
         this.userDao = userDao;
         this.passwordEncoder = passwordEncoder;
 
@@ -75,8 +81,13 @@ public class DataCommandLineRunner implements CommandLineRunner {
                 for (int i = 0; i < create.get("users"); i++) {
                     User user = createUser(testUserName + i, testPassword);
                     createSpacesAndChannels(user);
-
                 }
+
+                createSpaceMembers(create.get("memberSpaces"));
+
+
+
+
             }
         }
 
@@ -87,6 +98,7 @@ public class DataCommandLineRunner implements CommandLineRunner {
     private void removeExistingData() {
         //Clean data
         channels.deleteAll();
+        members.deleteAll();
         spaces.deleteAll();
     }
 
@@ -111,6 +123,10 @@ public class DataCommandLineRunner implements CommandLineRunner {
                 new Space(faker.superhero().name(), user));
     }
 
+    private SpaceMember createMember(Space space, User user) {
+        return members.save(new SpaceMember(space, user));
+    }
+
     private Channel createChannel(Space space) {
         return channels.save(
                 new Channel(faker.superhero().power(), space));
@@ -122,6 +138,18 @@ public class DataCommandLineRunner implements CommandLineRunner {
             Space space = createSpace(user);
             for(int j = 0; j < create.get("channels"); j++) {
                 Channel channel = createChannel(space);
+            }
+        }
+    }
+
+    private void createSpaceMembers(Integer totalPerUser) {
+        List<User> users = userDao.getUsers().findAll();
+        List<Space> spaceList = spaces.findAll();
+
+        for(User user : users) {
+            for(int i = 0; i < totalPerUser; i++) {
+                Space space = spaceList.get(rand.nextInt(spaceList.size()));
+                createMember(space, user);
             }
         }
     }
@@ -145,6 +173,8 @@ public class DataCommandLineRunner implements CommandLineRunner {
         create.put("spaces", 2);
         // Channels per user
         create.put("channels", 5);
+        // How many spaces each user is a member of
+        create.put("memberSpaces", 5);
     }
 
 

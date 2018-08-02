@@ -11,7 +11,7 @@ const AUTHED_ID = 1;
 export function handleInitialData() {
     return (dispatch) => {
         dispatch(showLoading());
-        return getInitialData().then(({users, spaces, channels}) => {
+        return getInitialData(AUTHED_ID).then(({users, spaces, channels}) => {
 
             dispatch(receiveUsers(users));
             dispatch(receiveChannels(channels));

@@ -13,4 +13,6 @@ public interface Channels extends CrudRepository<Channel, Long> {
 
     List<Channel> findAllBySpace(Space space);
 
+    List<Channel> findAllBySpaceIn(List<Space> spaces);
+
 }

@@ -3,10 +3,7 @@ package com.faiyted.blab.controller;
 import com.faiyted.blab.models.Channel;
 import com.faiyted.blab.models.user.User;
 import com.faiyted.blab.repositories.user.Users;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -26,6 +23,11 @@ public class UserController {
     @CrossOrigin(origins = "http://localhost:3000")
     public List<User> fullList() {
         return users.findAll();
+    }
+
+    @GetMapping("/user/{id}")
+    public User byUser(@PathVariable Long id) {
+        return users.findById(id).get();
     }
 
 

@@ -4,6 +4,7 @@ import Spaces from "./Spaces";
 import { NavLink} from 'react-router-dom';
 import SpaceHeader from "./SpaceHeader";
 import {handleMessageData} from "../actions/messages";
+import AuthedUser from "./AuthedUser";
 
 
 //TODO: add something to check which channel is currently selected
@@ -35,6 +36,7 @@ class Channels extends React.Component {
                         }) }
 
                     </ul>
+                <AuthedUser/>
             </div>
             </div>
         )

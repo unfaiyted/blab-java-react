@@ -97,6 +97,7 @@ public class DataCommandLineRunner implements CommandLineRunner {
         channels.deleteAll();
         members.deleteAll();
         spaces.deleteAll();
+        userDao.getUsers().deleteAll();
     }
 
 

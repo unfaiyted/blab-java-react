@@ -27,7 +27,7 @@ ul {
     padding: 0;
     margin: 0;
     overflow: hidden;
-    background-color: #202225;
+    background-color: #1b1c1f;
 
 }
 
@@ -165,22 +165,36 @@ a:active {
 
 }
 
+
+
 .channel-container a {
-    padding:12px;
+    padding:10px;
+    width: 100%;
+    display: block;
 }
 
+.channel-container a:hover {
+    background: rgba(59, 66, 78, 0.63);
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+    width: 100%;
+    color: #fff;
+    display: block;
+
+}
 .channel-container ul {
-    margin-top: 20px;
+    margin-top: 25px;
     width: 100%;
     display: flex;
     flex-flow: column;
 }
 
 .channel-container li {
-    padding-bottom: 15px;
+    padding-bottom: 10px;
     font-size: 1.3em;
     margin-left: 10px;
-    width: 100%;
+    width: calc(100% - 40px);
     display: block;
 
 }
@@ -385,4 +399,44 @@ padding-left: 5px;
     position: absolute;
     top: 32px;
     left: 30px;
+}
+
+.modal-container {
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    position: fixed; /* Stay in place */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0,0,0,0.4);
+}
+
+.space-add-container {
+    width: 400px;
+    height: 300px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    background: #f0eded;
+    padding: 10px;
+    z-index: 10; /* Sit on top */
+position: relative;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.space-add-btn {
+    border-radius: 5px;
+    background: #6274ed;
+    border: 0;
+    padding: 15px;
+    color: #fff;
+    font-size: 1.1em;
+    cursor: pointer;
 }

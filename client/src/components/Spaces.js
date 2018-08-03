@@ -1,13 +1,28 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import SpaceAdd from "./SpaceAdd";
 
 class Spaces extends React.Component {
+    state = {
+        displayAddSpace: false,
+    };
+
+
+    handleAddSpace = () => {
+        this.setState({
+            displayAddSpace: true
+        });
+    };
+
+    handleAddSpaceUnmount = () => {
+        this.setState({displayAddSpace: false})
+    }
 
     render() {
        const  spaces = this.props.spaces;
         return (
-
+            <div>
             <ul className={'spaces-list'}>
                 <li>
                     <Link to={'/add/space'}>
@@ -36,14 +51,23 @@ class Spaces extends React.Component {
                     })
                 }
                 <li>
-                    <Link to={'/add/space'}>
-                    <div className={'add'}>
+
+                    <div
+                        style={{cursor: "pointer"}}
+                        className={'add'}
+                    onClick={this.handleAddSpace}>
                         <span>+</span>
                     </div>
-                    </Link>
+
                 </li>
 
             </ul>
+
+                {this.state.displayAddSpace === true ?
+                    <SpaceAdd unmountMe={this.handleAddSpaceUnmount}
+                    /> : null
+                }
+            </div>
 
         )
     }

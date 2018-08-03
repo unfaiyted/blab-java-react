@@ -14,19 +14,12 @@ class Messages extends React.Component {
            <div className={'messages-container'}>
                {
                    conversation.map((message) => {
-
                        return <Message message={message} />
                    })
                }
            </div>)
-
-
-
     }
-
 }
-
-
 
 function mapStateToProps({ messages }) {
 

@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
-import { handleAuthData} from "../actions/authUser";
 import { withCookies } from 'react-cookie';
-import LoadingBar from "react-redux-loading";
 import AppRouter from "./AppRouter";
 import connect from "react-redux/es/connect/connect";
-import Login from "./Login";
+
 
 
 class Home extends React.Component {
@@ -21,19 +19,13 @@ class Home extends React.Component {
     }
 
     async componentDidMount() {
-        const { dispatch } = this.props;
-        dispatch(handleAuthData());
+
     }
 
     render() {
         console.log("authed user value:", this.props.authedUser);
-
-        // if(this.props.authedUser.isAuthenticated === true) {
-        //     return <AppRouter/>
-        // }
-
         return (<div className={'container'}>
-            {this.state.isAuthenticated === false ? <Login/> : <AppRouter/> }
+             <AppRouter/>
         </div>);
     }
 
@@ -44,7 +36,6 @@ function mapStateToProps({ authedUser }) {
         authedUser
     }
 }
-
 
 
 export default withCookies(connect(mapStateToProps)(Home));

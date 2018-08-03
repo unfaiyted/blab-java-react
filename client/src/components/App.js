@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import LoadingBar from 'react-redux-loading'
 import {BrowserRouter as Router} from "react-router-dom";
-import {handleInitialData} from "../actions/shared";
 import { CookiesProvider  } from 'react-cookie'
-import Spaces from "./Spaces";
 
-import AppRouter from "./AppRouter";
+import {navigateTo} from "../actions/redirect";
+
 import Home from "./Home";
 
 class App extends Component {
@@ -14,10 +12,21 @@ class App extends Component {
     //     const { dispatch } = this.props;
     //     dispatch(handleInitialData());
     // }
-  render() {
-      const {loading} = this.props;
-    return (
 
+    componentDidUpdate(prevProps) {
+        const { dispatch, redirectUrl } = this.props;
+        const isLoggingOut = prevProps.isLoggedIn && !this.props.isLoggedIn;
+        const isLoggingIn = !prevProps.isLoggedIn && this.props.isLoggedIn;
+
+        if (isLoggingIn) {
+            dispatch(navigateTo(redirectUrl))
+        } else if (isLoggingOut) {
+            // do any kind of cleanup or post-logout redirection here
+        }
+    }
+
+  render() {
+    return (
         <CookiesProvider>
         <Router>
             <Home/>
@@ -28,9 +37,10 @@ class App extends Component {
 }
 
 
-function mapStateToProps({ authedUser }) {
+function mapStateToProps(state) {
     return {
-        loading: authedUser === null
+        isLoggedIn: state.loggedIn,
+        redirectUrl: state.redirectUrl
     }
 }
 

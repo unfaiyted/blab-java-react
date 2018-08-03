@@ -5,6 +5,7 @@ import channels from './channels'
 import spaces from './spaces'
 import messages from './messages'
 import authedUser from './authedUser'
+import redirects from './redirect'
 import { loadingBarReducer } from 'react-redux-loading'
 
 
@@ -14,5 +15,6 @@ export default combineReducers({
     channels,
     spaces,
     messages,
+    redirects,
     loadingBar: loadingBarReducer
 })

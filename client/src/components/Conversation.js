@@ -47,7 +47,7 @@ class Conversation extends React.Component {
             <div className={'convo-container'} >
                 <ChannelHeader name={name}/>
                       <Messages/>
-                <Respond/>
+                <Respond name={name}/>
             </div>
             </div>
         )

@@ -415,13 +415,13 @@ padding-left: 5px;
 }
 
 .space-add-container {
-    width: 400px;
-    height: 300px;
+    width: 500px;
+    height: 400px;
     -webkit-border-radius: 10px;
     -moz-border-radius: 10px;
     border-radius: 10px;
     background: #f0eded;
-    padding: 10px;
+    padding: 20px;
     z-index: 10; /* Sit on top */
 position: relative;
     display: flex;
@@ -439,4 +439,36 @@ position: relative;
     color: #fff;
     font-size: 1.1em;
     cursor: pointer;
+}
+
+.space-back-btn {
+    border: transparent;
+    background: transparent;
+    font-size: 1.1em;
+    cursor: pointer;
+    color: #969696;
+    padding: 15px;
+}
+
+
+.space-create-page label {
+    text-transform: uppercase;
+    font-weight: bold;
+    float: left;
+    width: 100%;
+}
+
+.space-create-page input {
+    background: transparent;
+    border: transparent;
+    font-size: 1.2em;
+    padding: 10px;
+    border-bottom: 2px solid #a3a9ed;
+    float: left;
+    width: calc(100% - 20px);
+    margin-bottom: 5px;
+}
+
+.space-create-page .nav {
+    padding-top: 20px;
 }

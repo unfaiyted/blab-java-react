@@ -10,8 +10,13 @@ class Spaces extends React.Component {
 
             <ul className={'spaces-list'}>
                 <li>
-                    Home Icon
-                    7 online
+                    <Link to={'/add/space'}>
+                        <div className={'add'}>
+                            <span>D</span>
+                        </div>
+                    </Link>
+                    <span>1 Online</span>
+                    <hr/>
                 </li>
                 {
                     Object.keys(spaces).map((key) => {
@@ -31,7 +36,11 @@ class Spaces extends React.Component {
                     })
                 }
                 <li>
-                  Add
+                    <Link to={'/add/space'}>
+                    <div className={'add'}>
+                        <span>+</span>
+                    </div>
+                    </Link>
                 </li>
 
             </ul>

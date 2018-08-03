@@ -26,11 +26,11 @@ class Channels extends React.Component {
                         { channels.map((channel) => {
                             return (
                             <li key={channel.id}
-                            id={channel.id}>#
+                            id={channel.id}>
                                 <NavLink
                                     activeClassName={'active'}
                                     to={'/channel/' + channel.id}
-                                > {channel.name}</NavLink>
+                                ># {channel.name}</NavLink>
                                 </li>
                             )
                         }) }

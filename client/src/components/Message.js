@@ -17,7 +17,7 @@ class Message extends React.Component {
                     <span className={'time'}> Today at 11:49am</span>
                     <div className={'content'}>  {message}
                     </div>
-
+                    <hr/>
                 </div>
             </div>
         )

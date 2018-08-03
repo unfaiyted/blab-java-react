@@ -10,9 +10,13 @@ class AuthedUser extends React.Component {
                 </div>
                 <div className={'status'} >
                  </div>
-                <span className={'username'}> Dane</span>
 
-                Settings
+                <span className={'username'}> Dane</span>
+                <div className={'action'}>
+
+                    S
+                </div>
+
             </div>
         )
     }

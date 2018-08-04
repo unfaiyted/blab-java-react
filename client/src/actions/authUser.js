@@ -1,5 +1,5 @@
 import { showLoading, hideLoading} from 'react-redux-loading';
-import { login } from "../utils/auth";
+import { login } from "../utils/security/auth";
 
 export const SET_AUTHED_USER = 'SET_AUTHED_USER';
 export const LOGOUT_AUTHED_USER = 'LOGOUT_AUTHED_USER';

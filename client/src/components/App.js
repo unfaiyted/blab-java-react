@@ -6,7 +6,7 @@ import createHistory from 'history/createBrowserHistory';
 import {navigateTo} from "../actions/redirect";
 import Home from "./Home";
 import {handleInitialData} from "../actions/shared";
-import {login} from "../utils/auth";
+import {login} from "../utils/security/auth";
 
 
 const history = createHistory();

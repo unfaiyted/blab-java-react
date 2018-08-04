@@ -1,4 +1,4 @@
-import { BASE_URL } from "./api";
+import { BASE_URL } from "../api";
 
 
 function loginData() {
@@ -33,4 +33,14 @@ export async function login() {
     }
         return({isAuthenticated: true, user: JSON.parse(body)});
 
+}
+
+function loggedIn() {
+    return localStorage.auth && fetch(
+        `${BASE_URL}/api/vehicle`,
+        {headers: headers()})
+        .then(checkResponseStatus)
+        .then(() => { return true })
+        .catch(this.refreshToken)
+        .catch(() => { return false });
 }

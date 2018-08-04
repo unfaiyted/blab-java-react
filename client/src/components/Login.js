@@ -26,10 +26,15 @@ class Login extends React.Component {
         console.log('from',  from);
 
         return (
-            <div>
-                <p>You must log in to view the page at {this.props.redirects.currentUrl}</p>
+            <form className={'login-form'}>
+                <p>You must log in to view the page {this.props.redirects.currentUrl}</p>
+
+                <label>Username</label>
+                         <input type={'text'} name={'username'} id={'username'} />
+                <label>Password</label>
+                <input type={'password'}  name={'password'} id='password' />
                 <button onClick={this.login}>Log in</button>
-            </div>
+            </form>
         );
     }
 }

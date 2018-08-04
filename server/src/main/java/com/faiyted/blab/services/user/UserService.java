@@ -1,7 +1,6 @@
 package com.faiyted.blab.services.user;
 
 
-import com.faiyted.blab.models.user.ExtendedSocialUser;
 import com.faiyted.blab.models.user.User;
 import com.faiyted.blab.models.user.UserProfile;
 import com.faiyted.blab.repositories.user.Roles;
@@ -74,8 +73,6 @@ public class UserService {
             } catch (ClassCastException e) {
                 try {
                     System.out.println(SecurityContextHolder.getContext().getAuthentication().getPrincipal());
-                    ExtendedSocialUser socialUser = (ExtendedSocialUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-                    return getUsers().findByUsername(socialUser.getUserId());
                 } catch (NullPointerException x) {
                    return null;
                 }

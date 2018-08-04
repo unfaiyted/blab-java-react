@@ -57,13 +57,6 @@ public class UserProfile {
     }
 
 
-    public UserProfile(org.springframework.social.connect.UserProfile up) {
-        this.name = up.getName();
-        this.firstName = up.getFirstName();
-        this.lastName = up.getLastName();
-        this.email = up.getEmail();
-        this.username = up.getUsername();
-    }
 
     private void fixName() {
         // Is the name null?

@@ -13,11 +13,11 @@ class AppRouter extends React.Component {
     render() {
         return (
             <Switch>
-                <Route component={EnsureLoggedInContainer} >
-                    <Route exact path={'/'} component={Spaces} />
-                    <Route path={'/spaces/:id'} component={Channels}  />
-                    <Route path={'/channel/:id'} component={Conversation}/>
-                </Route>
+                <Route component={EnsureLoggedInContainer} />
+                    {/*<Route exact path={'/'} component={Spaces} />*/}
+                    {/*<Route path={'/spaces/:id'} component={Channels}  />*/}
+                    {/*<Route path={'/channel/:id'} component={Conversation}/>*/}
+
             </Switch>
 
         )

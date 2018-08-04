@@ -2,10 +2,14 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {BrowserRouter as Router} from "react-router-dom";
 import { CookiesProvider  } from 'react-cookie'
-
+import createHistory from 'history/createBrowserHistory';
 import {navigateTo} from "../actions/redirect";
-
 import Home from "./Home";
+import {handleInitialData} from "../actions/shared";
+import {login} from "../utils/auth";
+
+
+const history = createHistory();
 
 class App extends Component {
     // componentDidMount() {
@@ -14,21 +18,19 @@ class App extends Component {
     // }
 
     componentDidUpdate(prevProps) {
-        const { dispatch, redirectUrl } = this.props;
-        const isLoggingOut = prevProps.isLoggedIn && !this.props.isLoggedIn;
-        const isLoggingIn = !prevProps.isLoggedIn && this.props.isLoggedIn;
+        const {  authedUser } = this.props;
+            if(authedUser && authedUser.isAuthenticated) {
+                console.log("user was authenticated", authedUser);
+                const { dispatch } = this.props;
 
-        if (isLoggingIn) {
-            dispatch(navigateTo(redirectUrl))
-        } else if (isLoggingOut) {
-            // do any kind of cleanup or post-logout redirection here
-        }
+                dispatch(handleInitialData(authedUser.user.id));
+            }
     }
 
   render() {
     return (
         <CookiesProvider>
-        <Router>
+        <Router history={history}>
             <Home/>
         </Router>
         </CookiesProvider>
@@ -40,6 +42,7 @@ class App extends Component {
 function mapStateToProps(state) {
     return {
         isLoggedIn: state.loggedIn,
+        authedUser: state.authedUser,
         redirectUrl: state.redirectUrl
     }
 }

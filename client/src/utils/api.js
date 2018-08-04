@@ -10,12 +10,30 @@ function handleError(error) {
 
 // GET DATA
 async function getUsers() {
-    const response = await fetch(BASE_URL + 'users/list');
+    const response = await fetch(BASE_URL + 'users/list', {
+        method: 'GET',
+        credentials: 'include', //
+        agent: null,
+        headers: {
+            "Content-Type": "text/plain",
+            'Authorization': 'Basic ' + btoa('username:password'),
+        },
+        timeout: 5000
+    });
     return response.json();
 }
 
 async function getChannels(userId) {
-    const response = await fetch(BASE_URL + 'channels/user/' + userId);
+    const response = await fetch(BASE_URL + 'channels/user/' + userId, {
+        method: 'GET',
+        credentials: 'include', //
+        agent: null,
+        headers: {
+            "Content-Type": "text/plain",
+            'Authorization': 'Basic ' + btoa('username:password'),
+        },
+        timeout: 5000
+    });
     return response.json();
 }
 
@@ -32,7 +50,16 @@ async function getChannelsBySpace(spaceId) {
 }
 
 async function getSpaces(userId) {
-    const response = await fetch(BASE_URL + 'spaces/member/' + userId);
+    const response = await fetch(BASE_URL + 'spaces/member/' + userId, {
+        method: 'GET',
+        credentials: 'include', //
+        agent: null,
+        headers: {
+            "Content-Type": "text/plain",
+            'Authorization': 'Basic ' + btoa('username:password'),
+        },
+        timeout: 5000
+    });
     return response.json();
 }
 
@@ -43,7 +70,16 @@ async function getSpacesByUser(userId) {
 
 
 export async function getMessages(channelId) {
-    const response = await fetch(BASE_URL + 'messages/channel/' + channelId);
+    const response = await fetch(BASE_URL + 'messages/channel/' + channelId, {
+        method: 'GET',
+        credentials: 'include', //
+        agent: null,
+        headers: {
+            "Content-Type": "text/plain",
+            'Authorization': 'Basic ' + btoa('username:password'),
+        },
+        timeout: 5000
+    });
     return response.json();
 }
 

@@ -25,7 +25,9 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 @Configuration
 @EnableWebSecurity
@@ -55,10 +57,20 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     // Cross Browser AJAX request checks
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
+
+        List<String> headers = new ArrayList<>();
+
+        headers.add("Allow");
+        headers.add("Access-Control-Allow-Origin");
+        headers.add("Authorization");
+        headers.add("Cache-Control");
+        headers.add("Content-Type");
+
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000"));
         configuration.setAllowedMethods(Arrays.asList("GET","POST","OPTIONS","PUT","DELETE"));
         configuration.setAllowCredentials(true);
+        configuration.setAllowedHeaders(headers);
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;

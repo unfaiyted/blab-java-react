@@ -16,16 +16,18 @@ class Login extends React.Component {
     };
 
     render() {
-        const { from } = this.props.location.state || { from: { pathname: "/" } };
+        const { from } = this.props.redirects.currentUrl || { from: { pathname: "/" } };
         const { redirectToReferrer } = this.state;
 
         if (redirectToReferrer) {
             return <Redirect to={from} />;
         }
 
+        console.log('from',  from);
+
         return (
             <div>
-                <p>You must log in to view the page at {from.pathname}</p>
+                <p>You must log in to view the page at {this.props.redirects.currentUrl}</p>
                 <button onClick={this.login}>Log in</button>
             </div>
         );
@@ -33,10 +35,11 @@ class Login extends React.Component {
 }
 
 
-function mapStateToProps({ authedUser }){
+function mapStateToProps({ redirects, authedUser }){
     return {
+        redirects,
         authedUser
     }
 }
 
-export default connect()(Login);
+export default connect(mapStateToProps)(Login);

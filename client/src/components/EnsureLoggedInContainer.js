@@ -1,26 +1,54 @@
 import React from 'react';
-import authedUser from "../reducers/authedUser";
 import {connect} from 'react-redux'
-import createBrowserHistory from 'history/createBrowserHistory'
+import {handleInitialData} from "../actions/shared";
 import {setRedirectUrl} from "../actions/redirect";
+import Login from "./Login";
+import {Route, Switch} from "react-router-dom";
+import Spaces from "./Spaces";
+import Channels from "./Channels";
+import Conversation from "./Conversation";
 
 class EnsureLoggedInContainer extends React.Component {
-    componentDidMount() {
-        const { dispatch, currentURL } = this.props;
+    state = {
+        isAuthenticated: false
+    };
 
-        if (!authedUser.isAuthenticated) {
-            // set the current url/path for future redirection (we use a Redux action)
-            // then redirect (we use a React Router method)
-            dispatch(setRedirectUrl(currentURL));
-          //  createBrowserHistory.replace("/login")
+    static defaultProps = {
+        authedUser: {
+            isAuthenticated: false
         }
     }
 
+    componentDidMount() {
+        const { dispatch, currentURL, authedUser } = this.props;
+
+        if (authedUser && !authedUser.isAuthenticated) {
+            this.setState({
+                isAuthenticated: false
+            });
+            // set the current url/path for future redirection (we use a Redux action)
+            // then redirect (we use a React Router method)
+            dispatch(setRedirectUrl(currentURL));
+            this.props.history.replace("/login")
+        }
+
+    }
+
+
+
     render() {
-        if (authedUser.isAuthenticated) {
-            return this.props.children
+        const { authedUser } = this.props;
+        if (authedUser && authedUser.isAuthenticated) {
+            return (
+                <div>
+                <Route exact path={'/'} component={Spaces} />
+                <Route path={'/spaces/:id'} component={Channels}  />
+                 <Route path={'/channel/:id'} component={Conversation}/>
+                </div>
+
+            )
         } else {
-            return null
+            return <Login/>
         }
     }
 }

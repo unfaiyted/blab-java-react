@@ -4,21 +4,7 @@ import AppRouter from "./AppRouter";
 import connect from "react-redux/es/connect/connect";
 
 
-
 class Home extends React.Component {
-    state = {
-        isLoading: true,
-        isAuthenticated: false,
-        user: undefined
-    };
-
-    constructor(props) {
-        super(props);
-        const {cookies} = props;
-        this.state.csrfToken = cookies.get('XSRF-TOKEN');
-
-    }
-
 
     render() {
         return (<div className={'container'}>

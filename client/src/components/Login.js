@@ -27,7 +27,7 @@ class Login extends React.Component {
         const { redirectToReferrer } = this.state;
 
         if (redirectToReferrer) {
-            return <Redirect to={from} />;
+            return <Redirect to={'/'} />;
         }
 
         const { handleSubmit } = this.props;

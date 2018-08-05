@@ -86,8 +86,10 @@ async function checkAuthToken(oAuth) {
 
     const body = await response.json();
 
-    if(body.error !== undefined) {
-        console.warn("Error with token", body.error);
+    console.log(body);
+
+    if(body.error != null) {
+        console.error("Error with token:", body.error);
         return false;
     }
 
@@ -102,7 +104,7 @@ export async function checkValidLoginState() {
     }
     const oAuth = JSON.parse(localStorage.getItem('oAuth'));
 
-    if(checkAuthToken(oAuth)) {
+    if(await checkAuthToken(oAuth)) {
         const account = await getAccountDataByToken(oAuth.access_token);
 
         console.log("account", account);

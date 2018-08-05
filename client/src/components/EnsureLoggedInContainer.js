@@ -7,6 +7,7 @@ import {Route, Switch} from "react-router-dom";
 import Spaces from "./Spaces";
 import Channels from "./Channels";
 import Conversation from "./Conversation";
+import {getInitialData} from "../utils/api";
 
 class EnsureLoggedInContainer extends React.Component {
     state = {
@@ -19,31 +20,34 @@ class EnsureLoggedInContainer extends React.Component {
         }
     };
 
-    componentWillMount() {
+    componentDidMount() {
         const { dispatch, currentURL, authedUser } = this.props;
 
-        if (authedUser && !authedUser.isAuthenticated) {
+        if (authedUser && authedUser.isAuthenticated) {
+            this.setState({
+                isAuthenticated: true
+            });
+
+        } else {
+            dispatch(setRedirectUrl(currentURL));
+           this.props.history.replace("/");
             this.setState({
                 isAuthenticated: false
             });
-
-            dispatch(setRedirectUrl(currentURL));
-            this.props.history.replace("/login")
         }
-
 
     }
 
 
 
     render() {
-        const { authedUser } = this.props;
-        if (authedUser && authedUser.isAuthenticated) {
+        if (this.state.isAuthenticated) {
+            console.log("authenticated routes");
             return (
                 <div>
                 <Route exact path={'/'} component={Spaces} />
                 <Route path={'/spaces/:id'} component={Channels}  />
-                 <Route path={'/channel/:id'} component={Conversation}/>
+                <Route path={'/channel/:id'} component={Conversation}/>
                 </div>
 
             )

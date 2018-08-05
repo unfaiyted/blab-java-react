@@ -5,8 +5,7 @@ import { receiveUsers } from "./users";
 import { setAuthUser } from "./authUser";
 import { showLoading, hideLoading} from 'react-redux-loading';
 
-
-
+//test
 export function handleInitialData(AUTHED_ID) {
     return (dispatch) => {
         dispatch(showLoading());

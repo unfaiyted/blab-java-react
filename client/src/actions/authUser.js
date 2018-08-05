@@ -1,5 +1,5 @@
 import { showLoading, hideLoading} from 'react-redux-loading';
-import { login } from "../utils/security/auth";
+import { login, checkValidLoginState } from "../utils/security/auth";
 import {handleInitialData} from "./shared";
 
 export const SET_AUTHED_USER = 'SET_AUTHED_USER';
@@ -36,7 +36,7 @@ export function handleAuthData(username, password) {
         dispatch(showLoading());
         return login(username, password).then((response) => {
             dispatch(setAuthUser(response));
-            dispatch(handleInitialData(response.user.id));
+            dispatch(handleInitialData(response.user.id))
             dispatch(hideLoading());
         })
     }

@@ -14,6 +14,9 @@ export function authHeader() {
     const oAuth = JSON.parse(localStorage.getItem('oAuth'));
 
     if (oAuth && oAuth.access_token) {
+
+        console.log(oAuth);
+
         return {
             'Authorization': `Bearer ${oAuth.access_token}`
         }

@@ -37,7 +37,6 @@ async function getToken(username, password) {
             method: 'POST',
             credentials: 'include', //
             headers: new Headers({
-                'Content-Type': 'application/x-www-form-urlencode',
                 'Authorization': 'Basic ' + btoa(CLIENT_ID + ":" + CLIENT_SECRET),
             }),
             body: data
@@ -100,29 +99,34 @@ async function checkAuthToken(oAuth) {
 
 export async function checkValidLoginState() {
     if(localStorage.getItem('oAuth') === null) {
-       return false;
+        return {
+            isAuthenticated: false,
+        };
     }
     const oAuth = JSON.parse(localStorage.getItem('oAuth'));
 
     if(oAuth !== null) {
 
         if (await checkAuthToken(oAuth)) {
-            const account = await getAccountDataByToken(oAuth.access_token);
+            const user = await getAccountDataByToken(oAuth.access_token);
 
-            console.log("account", account);
-
-            return true;
+            return {
+                isAuthenticated: true,
+                user,
+                oAuth
+            }
         }
-
     }
 
-    return false;
+    return {
+        isAuthenticated: false,
+    };
 
 }
 
 
 async function getAccountDataByToken(TOKEN) {
-    const response = await fetch(BASE_URL + "users/account" +
+    const response = await fetch(BASE_URL + "users/info" +
         `?access_token=${TOKEN}`, {
         method: 'POST',
         credentials: 'include'

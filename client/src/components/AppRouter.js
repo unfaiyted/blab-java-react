@@ -1,63 +1,51 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, withRouter } from 'react-router-dom';
 import Spaces from './Spaces';
 import Channels from './Channels';
 import Conversation from "./Conversation";
 import {connect} from 'react-redux';
 import EnsureLoggedInContainer from './EnsureLoggedInContainer'
-import { checkValidLoginState } from "../utils/security/auth";
-import {handleInitialData} from "../actions/shared";
+import {handleAuthenticatedUser} from "../actions/shared";
 
 class AppRouter extends React.Component {
     state = {
         isAuthenticated: false
     };
 
-    async componentWillMount() {
-        const {dispatch} = this.props;
-        const isAuthenticated =  await checkValidLoginState();
+    async componentDidMount() {
+        const {dispatch, authedUser} = this.props;
 
+           const isAuth = await dispatch(handleAuthenticatedUser());
 
-        this.setState({
-            isAuthenticated
-        });
-
+            if(isAuth === true) {
+                this.setState({
+                    isAuthenticated: true,
+                })
+            }
     }
-
-    componentWillReceiveProps() {
-        const {dispatch} = this.props;
-
-
-    }
-
 
     render() {
         return (
-            <div className={'container'}>
-                        {(!this.state.isAuthenticated) ?
-                            (
-                                <Switch>
-                                    <Route component={EnsureLoggedInContainer}/>
-                                </Switch>
-                            ) : (
-                                <Switch>
-                                    <Route exact path={'/'} component={Spaces} />
-                                    <Route path={'/spaces/:id'} component={Channels}  />
-                                    <Route path={'/channel/:id'} component={Conversation}/>
-                                </Switch>
-                            )
-                            }
-                </div>
-        )
+            <Switch>
+                {!this.state.isAuthenticated ?
+                    <Route component={EnsureLoggedInContainer}/>: null}
+
+                <Route exact path={'/'} component={Spaces} />
+                <Route path={'/spaces/:id'} component={Channels}  />
+                <Route path={'/channel/:id'} component={Conversation}/>
+            </Switch>
+
+
+
+            )
+
     }
 
 }
 
-function mapStateToProps({ authedUser }) {
-    return {
-        authedUser
-    }
+function mapStateToProps(state) {
+    return state
 
 }
 
-export default connect()(AppRouter);
+export default withRouter(connect(mapStateToProps)(AppRouter));

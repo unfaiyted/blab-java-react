@@ -13,13 +13,11 @@ class Login extends React.Component {
     submit = (e) => {
         e.preventDefault();
         const { dispatch } = this.props;
-
         const username = 'test11';
         const password = 'test';
 
-
         dispatch(handleAuthData(username, password));
-        this.setState({ redirectToReferrer: true });
+       // this.setState({ redirectToReferrer: true });
     };
 
     render() {
@@ -27,7 +25,7 @@ class Login extends React.Component {
         const { redirectToReferrer } = this.state;
 
         if (redirectToReferrer) {
-            return <Redirect to={'/'} />;
+            return <Redirect to={''} />;
         }
 
         const { handleSubmit } = this.props;

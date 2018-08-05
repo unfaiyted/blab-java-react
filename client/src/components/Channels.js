@@ -1,7 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import Spaces from "./Spaces";
-import { NavLink} from 'react-router-dom';
+import { NavLink, withRouter} from 'react-router-dom';
 import SpaceHeader from "./SpaceHeader";
 import {handleMessageData} from "../actions/messages";
 import AuthedUser from "./AuthedUser";
@@ -10,10 +10,10 @@ import AuthedUser from "./AuthedUser";
 //TODO: add something to check which channel is currently selected
 class Channels extends React.Component {
 
-    // handleChannelChange = (e) => {
-    //     const {dispatch} = this.props;
-    //     dispatch(handleMessageData(e.id));
-    // };
+    handleChannelChange = (e) => {
+        const {dispatch} = this.props;
+        dispatch(handleMessageData(e.id));
+    };
 
     render() {
         const channels = this.props.spacesChannels;
@@ -46,6 +46,7 @@ class Channels extends React.Component {
 
 function mapStateToProps({ channels }, props) {
     //channel id
+    console.log("channels ",channels);
 
     const passedId = (props.space === undefined) ? props.match.params.id : props.space;
 
@@ -59,7 +60,7 @@ function mapStateToProps({ channels }, props) {
         }
     }).filter((chan) => chan.spaceId === parseInt(passedId));
 
-    const spaceName = spacesChannels[0].spaceName;
+    const spaceName = (spacesChannels[0]) ? spacesChannels[0].spaceName : 'Loading...';
 
     return {
         spacesChannels,

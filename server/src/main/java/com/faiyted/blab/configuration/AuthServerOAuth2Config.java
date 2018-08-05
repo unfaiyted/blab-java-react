@@ -15,6 +15,8 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Aut
 import org.springframework.security.oauth2.provider.client.JdbcClientDetailsService;
 import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 
+import javax.annotation.Resource;
+
 @EnableAuthorizationServer
 @Configuration
 public class AuthServerOAuth2Config extends AuthorizationServerConfigurerAdapter {
@@ -35,11 +37,12 @@ public class AuthServerOAuth2Config extends AuthorizationServerConfigurerAdapter
 
     private final AuthenticationManager authenticationManager;
     private final AppConfig appConfig;
+
+    @Resource(name = "customUserDetailsService")
     private UserDetailsService userDetailsService;
 
     @Autowired
     public AuthServerOAuth2Config(
-            UserDetailsService userDetailsService,
             AuthenticationManager authenticationManager, AppConfig appConfig) {
         this.authenticationManager = authenticationManager;
         this.appConfig = appConfig;

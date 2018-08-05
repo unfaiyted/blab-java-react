@@ -15,6 +15,7 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -115,10 +116,32 @@ public class UserController {
          * The @EnableResourceServer on the application entry point is what makes all this magic happen.
          * If there is an incoming request token it will check the token validity and handle it accordingly
          */
+            User user = userDao.getUsers().findByUsername("test11");
+
+        System.out.println(principal.toString());
+
         return principal;
 
     }
 
+
+    @RequestMapping(value = "/info", method = RequestMethod.POST)
+    public  ResponseEntity<?> processProducts(OAuth2Authentication auth) {
+
+        System.out.println(auth.toString());
+
+
+
+        if( auth.getOAuth2Request().getRequestParameters().containsKey("username")) {
+           String username =  auth.getOAuth2Request().getRequestParameters().get("username");
+           User user = userDao.getUsers().findByUsername(username);
+           return ResponseEntity.ok().body(user);
+
+        }
+
+        return ResponseEntity.notFound().build();
+
+    }
 }
 
 

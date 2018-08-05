@@ -33,7 +33,6 @@ class Login extends React.Component {
             <div className={'login-container'}>
             <form className={'login-form'} onSubmit={(this.submit)}>
                 <p>You must log in to view the page {this.props.redirects.currentUrl}</p>
-
                 <label>Username</label>
                          <input type={'text'} name={'username'} id={'username'} />
                 <label>Password</label>

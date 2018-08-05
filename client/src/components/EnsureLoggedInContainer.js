@@ -17,20 +17,20 @@ class EnsureLoggedInContainer extends React.Component {
         authedUser: {
             isAuthenticated: false
         }
-    }
+    };
 
-    componentDidMount() {
+    componentWillMount() {
         const { dispatch, currentURL, authedUser } = this.props;
 
         if (authedUser && !authedUser.isAuthenticated) {
             this.setState({
                 isAuthenticated: false
             });
-            // set the current url/path for future redirection (we use a Redux action)
-            // then redirect (we use a React Router method)
+
             dispatch(setRedirectUrl(currentURL));
             this.props.history.replace("/login")
         }
+
 
     }
 

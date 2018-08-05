@@ -1,5 +1,4 @@
 import { BASE_URL } from "../api";
-import axios from 'axios';
 import headers from './headers'
 
 export const CLIENT_ID = 'blab-client';
@@ -67,7 +66,7 @@ export async function login(username, password) {
 
     // get auth token
     const oAuth = await getToken(username, password);
-    localStorage.setItem("oauth",   JSON.stringify(oAuth));
+    localStorage.setItem("oAuth",   JSON.stringify(oAuth));
 
     return({
         isAuthenticated: true,
@@ -77,17 +76,60 @@ export async function login(username, password) {
 }
 
 
+async function checkAuthToken(oAuth) {
+
+    const response = await fetch(BASE_URL + OAUTH_CHECK +
+        `?token=${oAuth.access_token}`, {
+                method: 'GET',
+                credentials: 'include'
+    });
+
+    const body = await response.json();
+
+    if(body.error !== undefined) {
+        console.warn("Error with token", body.error);
+        return false;
+    }
+
+    return (body.active);
+
+}
+
+
+export async function checkValidLoginState() {
+    if(localStorage.getItem('oAuth') === null) {
+       return false;
+    }
+    const oAuth = JSON.parse(localStorage.getItem('oAuth'));
+
+    if(checkAuthToken(oAuth)) {
+        const account = await getAccountDataByToken(oAuth.access_token);
+
+        console.log("account", account);
+
+        return true;
+    }
+
+    return false;
+
+}
+
+
+async function getAccountDataByToken(TOKEN) {
+    const response = await fetch(BASE_URL + "users/account" +
+        `?access_token=${TOKEN}`, {
+        method: 'POST',
+        credentials: 'include'
+    });
+
+    return response.json();
+}
 
 function refreshToken() {
     // send the regular oauth/token endpoint with refresh value to refresh token
     let data = new FormData();
     data.append("refresh_token","TOKEN_VALUE");
 }
-
-
-
-
-
 
 function loggedIn() {
 

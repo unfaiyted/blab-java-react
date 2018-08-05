@@ -16,17 +16,14 @@ class Home extends React.Component {
         super(props);
         const {cookies} = props;
         this.state.csrfToken = cookies.get('XSRF-TOKEN');
-    }
-
-    async componentDidMount() {
 
     }
+
 
     render() {
-        console.log("authed user value:", this.props.authedUser);
         return (<div className={'container'}>
-             <AppRouter/>
-        </div>);
+                      <AppRouter/>
+               </div>);
     }
 
 }

@@ -1,8 +1,13 @@
-import { isObject } from './helpers'
-
-import headers from './security/headers'
+import { authHeader } from "./security/headers";
 
 export const BASE_URL = 'http://localhost:8080/';
+
+
+const PARAMS = {
+    method: 'GET',
+    credentials: 'include',
+    headers: authHeader(),
+};
 
 function handleError(error) {
     console.warn(error);
@@ -10,51 +15,30 @@ function handleError(error) {
 }
 
 // GET DATA
-async function getUsers(auth_token) {
-    const response = await fetch(BASE_URL + 'users/list' + `?access_token=${auth_token}`, {
-        method: 'GET',
-        credentials: 'include', //
-        agent: null,
-        headers,
-        timeout: 5000
-    });
+async function getUsers() {
+    const response = await fetch(BASE_URL + 'users/list', PARAMS);
     return response.json();
 }
 
-async function getChannels(userId, auth_token) {
-    const response = await fetch(BASE_URL + 'channels/user/' + userId + `?access_token=${auth_token}`, {
-        method: 'GET',
-        credentials: 'include', //
-        agent: null,
-        headers,
-        timeout: 5000
-    });
+async function getChannels(userId) {
+    const response = await fetch(BASE_URL + 'channels/user/' + userId, PARAMS);
     return response.json();
 }
 
 
 
- async function getChannelsByOwnerId(ownerId, auth_token) {
-    const response = await fetch(BASE_URL + 'channels/list/' + ownerId + `?access_token=${auth_token}`);
+ async function getChannelsByOwnerId(ownerId) {
+    const response = await fetch(BASE_URL + 'channels/list/' + ownerId);
     return response.json();
 }
 
-async function getChannelsBySpace(spaceId, auth_token) {
-    const response = await fetch(BASE_URL + 'channels/space/' + spaceId + `?access_token=${auth_token}` );
+async function getChannelsBySpace(spaceId) {
+    const response = await fetch(BASE_URL + 'channels/space/' + spaceId  );
     return response.json();
 }
 
-async function getSpaces(userId, auth_token) {
-    const response = await fetch(BASE_URL + 'spaces/member/' + userId + `?access_token=${auth_token}`, {
-        method: 'GET',
-        credentials: 'include', //
-        agent: null,
-        headers: {
-            "Content-Type": "text/plain",
-            'Authorization': 'Basic ' + btoa('username:password'),
-        },
-        timeout: 5000
-    });
+async function getSpaces(userId) {
+    const response = await fetch(BASE_URL + 'spaces/member/' + userId,PARAMS);
     return response.json();
 }
 
@@ -65,11 +49,7 @@ async function getSpacesByUser(userId) {
 
 
 export async function getMessages(channelId, auth_token) {
-    const response = await fetch(BASE_URL + 'messages/channel/' + channelId + `?access_token=${auth_token}`, {
-        method: 'GET',
-        credentials: 'include', //
-        agent: null
-    });
+    const response = await fetch(BASE_URL + 'messages/channel/' + channelId, PARAMS);
     return response.json();
 }
 
@@ -88,11 +68,13 @@ export async function saveMessage(message) {
     return response.json();
 }
 
-export function getInitialData (userId, TOKEN) {
-    return Promise.all([
-        getUsers(TOKEN),
-        getSpaces(userId, TOKEN),
-        getChannels(userId, TOKEN),
+
+
+export async function  getInitialData (userId) {
+    return await Promise.all([
+        getUsers(),
+        getSpaces(userId),
+        getChannels(userId),
     ]).then(([
         users,
         spaces,

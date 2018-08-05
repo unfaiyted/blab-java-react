@@ -3,6 +3,7 @@ import Input from './Input'
 import {handleAuthData} from "../actions/authUser";
 import {Redirect} from 'react-router-dom'
 import {connect} from 'react-redux'
+import {handleInitialData} from "../actions/shared";
 
 class Login extends React.Component {
     state = {
@@ -16,6 +17,7 @@ class Login extends React.Component {
         const username = 'test11';
         const password = 'test';
 
+
         dispatch(handleAuthData(username, password));
         this.setState({ redirectToReferrer: true });
     };
@@ -28,9 +30,9 @@ class Login extends React.Component {
             return <Redirect to={from} />;
         }
 
-        console.log('from',  from);
         const { handleSubmit } = this.props;
         return (
+            <div className={'login-container'}>
             <form className={'login-form'} onSubmit={(this.submit)}>
                 <p>You must log in to view the page {this.props.redirects.currentUrl}</p>
 
@@ -40,6 +42,7 @@ class Login extends React.Component {
                 <input type={'password'}  name={'password'} id='password' />
                 <button onClick={this.login}>Log in</button>
             </form>
+            </div>
         );
     }
 }

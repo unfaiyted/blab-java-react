@@ -472,3 +472,53 @@ position: relative;
 .space-create-page .nav {
     padding-top: 20px;
 }
+
+
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.login-container form {
+    max-width: 400px;
+    border: 1px solid #2D2D2D;
+    border-radius: 4px;
+    padding: 20px;
+}
+
+.login-container p {
+    font-weight: bold;
+}
+
+.login-container label {
+float: left;
+    width: 100%;
+    margin: 5px;
+}
+
+.login-container input {
+    float: left;
+    width: calc(100% - 20px);
+    margin: 5px;
+    padding: 10px;
+    font-size: 20px;
+    border-radius: 5px;
+    background: rgba(65, 74, 87, 0.53);
+    border-color: transparent;
+    color: #fff;
+
+}
+
+
+.login-container button {
+margin: 5px;
+    border-radius: 5px;
+    background: #6274ed;
+    border: 0;
+    padding: 15px;
+    color: #fff;
+    font-size: 1.1em;
+    cursor: pointer;
+}

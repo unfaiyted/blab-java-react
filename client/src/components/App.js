@@ -17,9 +17,7 @@ class App extends Component {
         const {  authedUser } = this.props;
             if(authedUser && authedUser.isAuthenticated) {
                 console.log("user was authenticated", authedUser);
-                const { dispatch } = this.props;
 
-                dispatch(handleInitialData(authedUser.user.id, authedUser.oAuth.access_token));
             }
     }
 

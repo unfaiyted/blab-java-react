@@ -2,7 +2,7 @@ import { BASE_URL } from "../api";
 import headers from './headers'
 
 export const CLIENT_ID = 'blab-client';
-export const CLIENT_SECRET = 'blab-secret';
+export const CLIENT_SECRET = 'test';
 
 
 //he authorization endpoint
@@ -30,13 +30,15 @@ async function getToken(username, password) {
         data.append("client_id", CLIENT_ID);
         data.append("client_secret", CLIENT_SECRET);
 
+
     const response = await fetch(
-        BASE_URL + OAUTH_TOKEN,
+        BASE_URL + OAUTH_TOKEN + "",
         {
             method: 'POST',
             credentials: 'include', //
             headers: new Headers({
-                "Authorization": `Basic YmxhYi1jbGllbnQ6YmxhYi1zZWNyZXQ=`,
+                'Content-Type': 'application/x-www-form-urlencode',
+                'Authorization': 'Basic ' + btoa(CLIENT_ID + ":" + CLIENT_SECRET),
             }),
             body: data
         });
@@ -86,8 +88,6 @@ async function checkAuthToken(oAuth) {
 
     const body = await response.json();
 
-    console.log(body);
-
     if(body.error != null) {
         console.error("Error with token:", body.error);
         return false;
@@ -104,12 +104,16 @@ export async function checkValidLoginState() {
     }
     const oAuth = JSON.parse(localStorage.getItem('oAuth'));
 
-    if(await checkAuthToken(oAuth)) {
-        const account = await getAccountDataByToken(oAuth.access_token);
+    if(oAuth !== null) {
 
-        console.log("account", account);
+        if (await checkAuthToken(oAuth)) {
+            const account = await getAccountDataByToken(oAuth.access_token);
 
-        return true;
+            console.log("account", account);
+
+            return true;
+        }
+
     }
 
     return false;

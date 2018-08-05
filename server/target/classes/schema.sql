@@ -1,3 +1,5 @@
+SET SQL_MODE='ALLOW_INVALID_DATES';
+
 create table if not exists oauth_client_details (
   client_id VARCHAR(255) PRIMARY KEY,
   resource_ids VARCHAR(255),
@@ -63,11 +65,11 @@ create table if not exists ClientDetails (
   autoApproveScopes VARCHAR(255)
 );
 
-
-# INSERT INTO oauth_client_details
-#     (client_id, client_secret, scope, authorized_grant_types,
-#      web_server_redirect_uri, authorities, access_token_validity,
-#      refresh_token_validity, additional_information, autoapprove)
-# VALUES
-#        ("blab", "test", "trust,read,write",
-#     "password,authorization_code,refresh_token,implicit", null, null, 36000, 36000, null, true);
+--
+-- INSERT INTO oauth_client_details
+--     (client_id, client_secret, scope, authorized_grant_types,
+--      web_server_redirect_uri, authorities, access_token_validity,
+--      refresh_token_validity, additional_information, autoapprove)
+-- VALUES
+--        ("blab-client", "{noop}blab-server", "trust,read,write",
+--     "password,authorization_code,refresh_token,implicit", null, null, 36000, 36000, null, true);

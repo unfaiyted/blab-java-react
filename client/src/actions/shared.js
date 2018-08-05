@@ -5,16 +5,14 @@ import { receiveUsers } from "./users";
 import { setAuthUser } from "./authUser";
 import { showLoading, hideLoading} from 'react-redux-loading';
 
-
-
+//test
 export function handleInitialData(AUTHED_ID) {
-    console.log(AUTHED_ID);
     return (dispatch) => {
         dispatch(showLoading());
         return getInitialData(AUTHED_ID).then(({users, spaces, channels}) => {
-            dispatch(receiveUsers(users));
-            dispatch(receiveChannels(channels));
             dispatch(receiveSpaces(spaces));
+            dispatch(receiveChannels(channels));
+            dispatch(receiveUsers(users));
             dispatch(hideLoading());
 
         })

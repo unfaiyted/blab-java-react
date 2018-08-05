@@ -11,9 +11,9 @@ import { loadingBarReducer } from 'react-redux-loading'
 
 export default combineReducers({
     authedUser,
-    users,
-    channels,
     spaces,
+    channels,
+    users,
     messages,
     redirects,
     loadingBar: loadingBarReducer

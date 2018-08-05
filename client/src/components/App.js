@@ -1,37 +1,21 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import {BrowserRouter as Router} from "react-router-dom";
+import { Router} from "react-router-dom";
 import { CookiesProvider  } from 'react-cookie'
 import createHistory from 'history/createBrowserHistory';
-import {navigateTo} from "../actions/redirect";
-import Home from "./Home";
-import {handleInitialData} from "../actions/shared";
-import {login} from "../utils/security/auth";
-
+import AppRouter from "./AppRouter";
 
 const history = createHistory();
 
 class App extends Component {
-    // componentDidMount() {
-    //     const { dispatch } = this.props;
-    //     dispatch(handleInitialData());
-    // }
 
-    componentDidUpdate(prevProps) {
-        const {  authedUser } = this.props;
-            if(authedUser && authedUser.isAuthenticated) {
-                console.log("user was authenticated", authedUser);
-                const { dispatch } = this.props;
 
-                dispatch(handleInitialData(authedUser.user.id));
-            }
-    }
 
   render() {
     return (
         <CookiesProvider>
         <Router history={history}>
-            <Home/>
+           <AppRouter/>
         </Router>
         </CookiesProvider>
     );

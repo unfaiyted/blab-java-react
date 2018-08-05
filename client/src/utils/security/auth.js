@@ -1,46 +1,138 @@
 import { BASE_URL } from "../api";
+import headers from './headers'
+
+export const CLIENT_ID = 'blab-client';
+export const CLIENT_SECRET = 'blab-secret';
 
 
-function loginData() {
-    let port = (window.location.port ? ':' + window.location.port : '');
-    if (port === ':3000') {
-        port = ':8080';
-    }
-    window.location.href = '//' + window.location.hostname + port + '/private';
-}
-
+//he authorization endpoint
+const OAUTH_AUTHORIZE = 'oauth/authorize';
+//the token endpoint, creates
+const OAUTH_TOKEN = 'oauth/token';
+//errors
+const OAUTH_ERROR = 'oauth/error';
+//used by Resource Servers to decode access tokens
+const OAUTH_CHECK = 'oauth/check_token';
+//exposes public key for token verification if using JWT tokens
+const OAUTH_KEY = 'oauth/token_key';
 
 async function logout() {
-    console.log('logging out...');
-    fetch(BASE_URL + '/logout', {method: 'POST', credentials: 'include',
-        headers: {'X-XSRF-TOKEN': this.state.csrfToken}}).then(res => res.json())
-        .then(response => {
-            window.location.href = response.logoutUrl + "?id_token_hint=" +
-                response.idToken + "&post_logout_redirect_uri=" + window.location.origin;
-        });
 }
 
 
+async function getToken(username, password) {
 
-export async function login() {
-    const response = await fetch(BASE_URL + 'users/loggedIn', {credentials: 'include'});
+        let data = new FormData();
+
+        data.append("grant_type", "password");
+        data.append("password",  password);
+        data.append("username",  username);
+        data.append("client_id", CLIENT_ID);
+        data.append("client_secret", CLIENT_SECRET);
+
+    const response = await fetch(
+        BASE_URL + OAUTH_TOKEN,
+        {
+            method: 'POST',
+            credentials: 'include', //
+            headers: new Headers({
+                "Authorization": `Basic YmxhYi1jbGllbnQ6YmxhYi1zZWNyZXQ=`,
+            }),
+            body: data
+        });
+
+        return response.json();
+
+}
+
+
+export async function login(username, password) {
+
+    let data = new FormData();
+    data.append("username", username);
+    data.append("password", password);
+
+    const response = await fetch(BASE_URL + 'users/auth', {
+        method: 'POST',
+        credentials: 'include',
+        body: data
+    });
+
     const body = await response.text();
-
-    console.log(body);
 
     if (body === '') {
         return({isAuthenticated: false});
     }
-        return({isAuthenticated: true, user: JSON.parse(body)});
+
+    // get auth token
+    const oAuth = await getToken(username, password);
+    localStorage.setItem("oAuth",   JSON.stringify(oAuth));
+
+    return({
+        isAuthenticated: true,
+        user: JSON.parse(body),
+        oAuth
+    });
+}
+
+
+async function checkAuthToken(oAuth) {
+
+    const response = await fetch(BASE_URL + OAUTH_CHECK +
+        `?token=${oAuth.access_token}`, {
+                method: 'GET',
+                credentials: 'include'
+    });
+
+    const body = await response.json();
+
+    console.log(body);
+
+    if(body.error != null) {
+        console.error("Error with token:", body.error);
+        return false;
+    }
+
+    return (body.active);
 
 }
 
+
+export async function checkValidLoginState() {
+    if(localStorage.getItem('oAuth') === null) {
+       return false;
+    }
+    const oAuth = JSON.parse(localStorage.getItem('oAuth'));
+
+    if(await checkAuthToken(oAuth)) {
+        const account = await getAccountDataByToken(oAuth.access_token);
+
+        console.log("account", account);
+
+        return true;
+    }
+
+    return false;
+
+}
+
+
+async function getAccountDataByToken(TOKEN) {
+    const response = await fetch(BASE_URL + "users/account" +
+        `?access_token=${TOKEN}`, {
+        method: 'POST',
+        credentials: 'include'
+    });
+
+    return response.json();
+}
+
+function refreshToken() {
+    // send the regular oauth/token endpoint with refresh value to refresh token
+    let data = new FormData();
+    data.append("refresh_token","TOKEN_VALUE");
+}
+
 function loggedIn() {
-    return localStorage.auth && fetch(
-        `${BASE_URL}/api/vehicle`,
-        {headers: headers()})
-        .then(checkResponseStatus)
-        .then(() => { return true })
-        .catch(this.refreshToken)
-        .catch(() => { return false });
+
 }

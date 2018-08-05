@@ -3,15 +3,22 @@ import Input from './Input'
 import {handleAuthData} from "../actions/authUser";
 import {Redirect} from 'react-router-dom'
 import {connect} from 'react-redux'
+import {handleInitialData} from "../actions/shared";
 
 class Login extends React.Component {
     state = {
         redirectToReferrer: false
     };
 
-    login = () => {
+    submit = (e) => {
+        e.preventDefault();
         const { dispatch } = this.props;
-        dispatch(handleAuthData());
+
+        const username = 'test11';
+        const password = 'test';
+
+
+        dispatch(handleAuthData(username, password));
         this.setState({ redirectToReferrer: true });
     };
 
@@ -20,13 +27,13 @@ class Login extends React.Component {
         const { redirectToReferrer } = this.state;
 
         if (redirectToReferrer) {
-            return <Redirect to={from} />;
+            return <Redirect to={'/'} />;
         }
 
-        console.log('from',  from);
-
+        const { handleSubmit } = this.props;
         return (
-            <form className={'login-form'}>
+            <div className={'login-container'}>
+            <form className={'login-form'} onSubmit={(this.submit)}>
                 <p>You must log in to view the page {this.props.redirects.currentUrl}</p>
 
                 <label>Username</label>
@@ -35,6 +42,7 @@ class Login extends React.Component {
                 <input type={'password'}  name={'password'} id='password' />
                 <button onClick={this.login}>Log in</button>
             </form>
+            </div>
         );
     }
 }

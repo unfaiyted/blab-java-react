@@ -28,10 +28,10 @@ export function receiveMessages(messages) {
     }
 }
 
-export function handleMessageData(channelId) {
+export function handleMessageData(channelId, TOKEN) {
     return (dispatch) => {
         dispatch(showLoading());
-        return(getMessages(channelId)).then((messages) => {
+        return(getMessages(channelId, TOKEN)).then((messages) => {
             dispatch(receiveMessages(messages));
             dispatch(hideLoading());
         })

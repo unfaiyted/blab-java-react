@@ -2,11 +2,19 @@ package com.faiyted.blab.controller;
 
 import com.faiyted.blab.models.Channel;
 import com.faiyted.blab.models.user.User;
+import com.faiyted.blab.models.user.UserWithRoles;
+import com.faiyted.blab.repositories.user.Roles;
 import com.faiyted.blab.repositories.user.Users;
 import com.faiyted.blab.services.user.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,10 +30,16 @@ import java.util.Map;
 public class UserController {
     private Users users;
     private UserService userDao;
+    private Roles roles;
 
-    public UserController(Users users, UserService userDao) {
+    private PasswordEncoder passwordEncoder;
+
+    public UserController(Users users, UserService userDao, PasswordEncoder passwordEncoder, Roles roles) {
         this.users = users;
+        this.passwordEncoder = passwordEncoder;
         this.userDao = userDao;
+        this.roles = roles;
+
 
     }
 
@@ -65,9 +79,32 @@ public class UserController {
         return ResponseEntity.ok().body(logoutDetails);
     }
 
+    @CrossOrigin(origins = "http://localhost:3000")
+    @RequestMapping(value="/auth", method = RequestMethod.POST, produces = "application/json")
+    public ResponseEntity<?> authUser(@RequestParam("username") String username, @RequestParam("password") String password) {
+
+        User user = userDao.getUsers().findByUsername(username);
+
+        if(!passwordEncoder.matches(password, user.getPassword())) {
+            return new ResponseEntity<>("", HttpStatus.UNAUTHORIZED);
+        }
+            UserDetails userDetails = new UserWithRoles(user, roles.ofUserWith(user.getUsername()));
+
+            Authentication auth = new UsernamePasswordAuthenticationToken(
+                    userDetails,
+                    userDetails.getPassword(),
+                    userDetails.getAuthorities()
+            );
+
+            SecurityContext context = SecurityContextHolder.getContext();
+            context.setAuthentication(auth);
+
+        return ResponseEntity.ok().body(user);
+    }
 
 
-    @RequestMapping(path = "/account",method = RequestMethod.POST)
+    // who is logged in
+    @RequestMapping(path = "/account", method = RequestMethod.POST)
     public Principal oauth(Principal principal) {
         /*
          * Translate the incoming request, which has an access token

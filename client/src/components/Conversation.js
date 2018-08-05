@@ -16,11 +16,13 @@ class Conversation extends React.Component {
     componentWillMount() {
         const { id } = this.props.channel[0];
         const {dispatch} = this.props;
-        dispatch(handleMessageData(id))
+        const { access_token } = this.props.authedUser.oAuth;
+        dispatch(handleMessageData(id, access_token))
     }
 
     componentWillReceiveProps(newProps) {
         const passedId = newProps.match.params.id;
+        const { access_token } = this.props.authedUser.oAuth;
         console.log(passedId);
 
         if(passedId !== this.props.match.params.id) {
@@ -30,7 +32,7 @@ class Conversation extends React.Component {
 
             const { id } = this.props.channel[0];
             const {dispatch} = this.props;
-            dispatch(handleMessageData(id))
+            dispatch(handleMessageData(id, access_token))
 
         }
 
@@ -56,7 +58,7 @@ class Conversation extends React.Component {
 }
 
 
-function mapStateToProps({ channels, messages }, props) {
+function mapStateToProps({ channels, messages, authedUser }, props) {
     //channel id
     const passedId = props.match.params.id;
 
@@ -74,6 +76,7 @@ function mapStateToProps({ channels, messages }, props) {
 
     return {
         channel,
+        authedUser
         // conversation,
     }
 

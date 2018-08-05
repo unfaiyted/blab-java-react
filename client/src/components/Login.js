@@ -9,9 +9,14 @@ class Login extends React.Component {
         redirectToReferrer: false
     };
 
-    login = () => {
+    submit = (e) => {
+        e.preventDefault();
         const { dispatch } = this.props;
-        dispatch(handleAuthData());
+
+        const username = 'test11';
+        const password = 'test';
+
+        dispatch(handleAuthData(username, password));
         this.setState({ redirectToReferrer: true });
     };
 
@@ -24,9 +29,9 @@ class Login extends React.Component {
         }
 
         console.log('from',  from);
-
+        const { handleSubmit } = this.props;
         return (
-            <form className={'login-form'}>
+            <form className={'login-form'} onSubmit={(this.submit)}>
                 <p>You must log in to view the page {this.props.redirects.currentUrl}</p>
 
                 <label>Username</label>

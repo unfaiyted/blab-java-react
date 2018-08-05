@@ -42,12 +42,12 @@ public class AuthServerOAuth2Config extends AuthorizationServerConfigurerAdapter
 
         clients
                 .jdbc(appConfig.dataSource())
-                .withClient(CLIENT_ID)
-                .secret(CLIENT_SECRET)
-                .authorizedGrantTypes(GRANT_TYPE, AUTHORIZATION_CODE, REFRESH_TOKEN, IMPLICIT )
-                .scopes(SCOPE_READ, SCOPE_WRITE, TRUST)
-                .accessTokenValiditySeconds(ACCESS_TOKEN_VALIDITY_SECONDS)
-                .refreshTokenValiditySeconds(REFRESH_TOKEN_VALIDITY_SECONDS)
+//                .withClient(CLIENT_ID)
+//                .secret(CLIENT_SECRET)
+//                .authorizedGrantTypes(GRANT_TYPE, AUTHORIZATION_CODE, REFRESH_TOKEN, IMPLICIT )
+//                .scopes(SCOPE_READ, SCOPE_WRITE, TRUST)
+//                .accessTokenValiditySeconds(ACCESS_TOKEN_VALIDITY_SECONDS)
+//                .refreshTokenValiditySeconds(REFRESH_TOKEN_VALIDITY_SECONDS)
                  ;
     }
 

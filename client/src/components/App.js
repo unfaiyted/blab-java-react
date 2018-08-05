@@ -12,10 +12,6 @@ import {login} from "../utils/security/auth";
 const history = createHistory();
 
 class App extends Component {
-    // componentDidMount() {
-    //     const { dispatch } = this.props;
-    //     dispatch(handleInitialData());
-    // }
 
     componentDidUpdate(prevProps) {
         const {  authedUser } = this.props;
@@ -23,7 +19,7 @@ class App extends Component {
                 console.log("user was authenticated", authedUser);
                 const { dispatch } = this.props;
 
-                dispatch(handleInitialData(authedUser.user.id));
+                dispatch(handleInitialData(authedUser.user.id, authedUser.oAuth.access_token));
             }
     }
 
